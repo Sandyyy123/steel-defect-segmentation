@@ -1,0 +1,8 @@
+albumentations
+matplotlib
+numpy
+pandas
+pillow
+segmentation-models-pytorch
+torch
+transformers
