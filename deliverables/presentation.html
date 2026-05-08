@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Severstal Steel Defect Detection - Project 10</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    background: #0f172a; color: #e2e8f0;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.7; min-height: 100vh;
+  }
+  nav {
+    position: sticky; top: 0; z-index: 1000;
+    background: #0f172aee; backdrop-filter: blur(12px);
+    border-bottom: 1px solid #1e293b; padding: 0.5rem 0;
+    overflow-x: auto; white-space: nowrap;
+  }
+  nav .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: flex; gap: 0.15rem; align-items: center; }
+  nav a { color: #94a3b8; text-decoration: none; font-size: 0.78rem; padding: 0.4rem 0.65rem; border-radius: 6px; transition: all 0.2s; flex-shrink: 0; }
+  nav a:hover, nav a:focus { color: #38bdf8; background: #1e293b; }
+  nav .nav-title { color: #38bdf8; font-weight: 700; font-size: 0.85rem; margin-right: 0.6rem; flex-shrink: 0; }
+  main { max-width: 1100px; margin: 0 auto; padding: 1.2rem 1.6rem 4rem; }
+  section { margin-bottom: 4rem; padding-top: 3.5rem; }
+  section:first-of-type { padding-top: 1rem; }
+  h1 {
+    font-size: 2.5rem; font-weight: 800; line-height: 1.2;
+    background: linear-gradient(135deg, #38bdf8, #a78bfa, #f472b6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.6rem;
+  }
+  .subtitle { color: #94a3b8; font-size: 1.05rem; margin-bottom: 1.4rem; }
+  h2 {
+    font-size: 1.7rem; font-weight: 700; color: #38bdf8;
+    margin-bottom: 1.2rem; padding-bottom: 0.4rem; border-bottom: 2px solid #1e293b;
+  }
+  h3 { font-size: 1.18rem; font-weight: 600; margin: 1.4rem 0 0.6rem; color: #a78bfa; }
+  p { margin-bottom: 0.9rem; }
+  ul, ol { margin: 0.5rem 0 1rem 1.6rem; }
+  li { margin-bottom: 0.35rem; }
+  strong { color: #f8fafc; }
+  a { color: #38bdf8; text-decoration: none; border-bottom: 1px dashed #1e293b; }
+  a:hover { color: #a78bfa; border-bottom-color: #a78bfa; }
+  .box { border-radius: 10px; padding: 1.1rem 1.3rem; margin: 1rem 0 1.2rem; }
+  .box-pink   { background: #f472b610; border-left: 4px solid #f472b6; }
+  .box-green  { background: #34d39910; border-left: 4px solid #34d399; }
+  .box-blue   { background: #38bdf810; border-left: 4px solid #38bdf8; }
+  .box-purple { background: #a78bfa10; border-left: 4px solid #a78bfa; }
+  .box-amber  { background: #fbbf2410; border-left: 4px solid #fbbf24; }
+  pre { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 1.1rem 1.3rem; overflow-x: auto; margin: 0.8rem 0 1.2rem; }
+  pre code { font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 0.85rem; line-height: 1.6; color: #e2e8f0; }
+  p code, li code, td code { background: #1e293b; padding: 0.15rem 0.4rem; border-radius: 4px; font-family: 'Cascadia Code', 'Consolas', monospace; font-size: 0.88em; color: #38bdf8; }
+  table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+  th, td { padding: 0.6rem 0.9rem; text-align: left; border-bottom: 1px solid #1e293b; }
+  th { background: #1e293b; color: #38bdf8; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  tr:hover { background: #1e293b40; }
+  .hero {
+    background: linear-gradient(135deg, #0f172a, #1e293b 60%, #0f172a);
+    padding: 3rem 2rem; border-radius: 16px; margin-bottom: 2rem;
+    border: 1px solid #334155; text-align: left;
+  }
+  .hero .meta { color: #94a3b8; font-size: 0.95rem; margin-top: 1rem; }
+  .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem; margin-top: 1rem; }
+  .meta-grid .item { background: #1e293b; padding: 0.7rem 0.9rem; border-radius: 8px; border-left: 3px solid #38bdf8; }
+  .meta-grid .item .lbl { display: block; font-size: 0.7rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.2rem; }
+  .meta-grid .item .val { font-weight: 700; color: #e2e8f0; font-size: 0.95rem; }
+  img { max-width: 100%; height: auto; border-radius: 10px; margin: 0.8rem 0; border: 1px solid #1e293b; }
+  footer { text-align: center; color: #64748b; font-size: 0.85rem; padding: 2rem 1rem; border-top: 1px solid #1e293b; margin-top: 3rem; }
+</style>
+</head>
+<body>
+<nav><div class="nav-inner">
+  <span class="nav-title">Project 10: Severstal</span>
+  <a href="#overview">Overview</a>
+  <a href="#motivation">Motivation</a>
+  <a href="#data">Data</a>
+  <a href="#methods">Methods</a>
+  <a href="#baseline">Baseline</a>
+  <a href="#advanced">Advanced</a>
+  <a href="#discussion">Discussion</a>
+  <a href="#conclusion">Conclusion</a>
+  <a href="#refs">References</a>
+</div></nav>
+<main>
+
+<section id="overview" class="hero">
+  <h1>Severstal Steel Defect Detection</h1>
+  <div class="subtitle">Multi-class semantic segmentation of surface defects on hot-rolled steel sheets. U-Net (ResNet-34) baseline vs SegFormer (mit-b3) advanced model.</div>
+  <div class="meta-grid">
+    <div class="item"><span class="lbl">Task</span><span class="val">Multi-label segmentation</span></div>
+    <div class="item"><span class="lbl">Dataset</span><span class="val">Severstal Kaggle 2019</span></div>
+    <div class="item"><span class="lbl">Images</span><span class="val">12,568 train, 5,506 test</span></div>
+    <div class="item"><span class="lbl">Resolution</span><span class="val">256 x 1600 grayscale</span></div>
+    <div class="item"><span class="lbl">Defect classes</span><span class="val">4 (multi-label)</span></div>
+    <div class="item"><span class="lbl">Headline metric</span><span class="val">Per-class Dice</span></div>
+    <div class="item"><span class="lbl">Phase 1 status</span><span class="val">Code scaffolded, not executed</span></div>
+    <div class="item"><span class="lbl">Project track</span><span class="val">Liora MLE / Computer Vision</span></div>
+  </div>
+</section>
+
+<section id="motivation">
+  <h2>Motivation</h2>
+  <p>Surface inspection on steel rolling mills is one of the longest-standing applications of computer vision in heavy industry. The economic case is concrete: a single missed surface defect on a hot-rolled coil can cascade into customer rejects, downstream scrap, and warranty exposure that is several orders of magnitude larger than the cost of the inspection step itself.</p>
+  <div class="box box-blue">
+    <strong>DACH industrial Mittelstand context.</strong> Mills like Salzgitter, ThyssenKrupp, voestalpine, and ArcelorMittal Eisenhuttenstadt run line-scan inspection systems that increasingly rely on deep encoder-decoder networks. The Severstal Kaggle benchmark (2019) is the standard public reference point for any vendor selling segmentation-based QC to a DACH steel customer. Any new system is implicitly compared against the 0.91 mean-Dice leaderboard ensemble.
+  </div>
+  <h3>Why segmentation, not detection</h3>
+  <ul>
+    <li>Per-pixel masks let downstream layers attribute defects to specific rollers, lubricant batches, or thermal-cycle events.</li>
+    <li>Defect classes co-occur on the same image, so the four output channels are independent sigmoids, not a softmax.</li>
+    <li>Defect geometry is highly anisotropic (long thin scratches), which favours encoder-decoder architectures with sharp upsampling boundaries.</li>
+  </ul>
+</section>
+
+<section id="data">
+  <h2>Dataset</h2>
+  <table>
+    <thead><tr><th>Item</th><th>Value</th></tr></thead>
+    <tbody>
+      <tr><td>Source</td><td><a href="https://www.kaggle.com/competitions/severstal-steel-defect-detection">Kaggle - Severstal Steel Defect Detection</a></td></tr>
+      <tr><td>Train images</td><td>12,568 (256 x 1600 px, single-channel grayscale)</td></tr>
+      <tr><td>Test images</td><td>5,506 (unlabelled)</td></tr>
+      <tr><td>Annotation format</td><td>RLE-encoded masks, column-major</td></tr>
+      <tr><td>Defect classes</td><td>4 (likely pitting, inclusions, scratches, scaling - not officially labelled)</td></tr>
+      <tr><td>Total payload</td><td>~2 GB compressed</td></tr>
+    </tbody>
+  </table>
+  <h3>Class imbalance summary</h3>
+  <ul>
+    <li>Class 3 (scratches): ~50% of all defect pixels, present on ~5,000 images.</li>
+    <li>Class 4: ~25% of defect pixels, ~750 images.</li>
+    <li>Class 1: ~17% of defect pixels, ~900 images.</li>
+    <li>Class 2: ~8% of defect pixels, ~250 images (the rare class).</li>
+    <li>Background dominates: ~98-99% of all pixels.</li>
+  </ul>
+  <div class="box box-amber">
+    <strong>Phase 1 note.</strong> Dataset is behind Kaggle competition acceptance and exceeds 2 GB. Per project rules, download is documented in <code>data/README.md</code> but deferred to main-session execution. The training scripts are runnable but not executed during Phase 1.
+  </div>
+</section>
+
+<section id="methods">
+  <h2>Methods</h2>
+  <h3>Pipeline</h3>
+  <ul>
+    <li><strong>Splits.</strong> Single 70/15/15 random split at the image level, seed 42. Multilabel-stratified five-fold cross-validation flagged as Phase 2 follow-up.</li>
+    <li><strong>Preprocessing.</strong> ImageNet normalisation; horizontal and vertical flip augmentation; brightness/contrast jitter (p=0.3); Gaussian noise on the advanced model only (p=0.2).</li>
+    <li><strong>Loss.</strong> Dice + BCE for the baseline; focal Tversky for the advanced model (alpha=0.7 favours false-negative penalty for QC cost asymmetry; gamma=0.75 focal exponent).</li>
+    <li><strong>Optimiser.</strong> AdamW with weight decay 1e-5 (baseline), 1e-4 (advanced).</li>
+    <li><strong>Schedule.</strong> CosineAnnealingLR (baseline); CosineAnnealingWarmRestarts T0=5, T_mult=2 (advanced).</li>
+    <li><strong>Mixed precision.</strong> Disabled for the baseline; enabled for the advanced model under <code>torch.cuda.amp</code>.</li>
+  </ul>
+  <h3>Architectures</h3>
+  <table>
+    <thead><tr><th></th><th>Baseline</th><th>Advanced</th><th>Fallback</th></tr></thead>
+    <tbody>
+      <tr><td>Architecture</td><td>U-Net</td><td>SegFormer</td><td>DeepLabV3+</td></tr>
+      <tr><td>Encoder</td><td>ResNet-34</td><td>mit-b3 (HuggingFace <code>nvidia/mit-b3</code>)</td><td>EfficientNet-B4</td></tr>
+      <tr><td>Pretraining</td><td>ImageNet</td><td>ImageNet (transformer)</td><td>ImageNet</td></tr>
+      <tr><td>Loss</td><td>Dice + BCE</td><td>Focal Tversky</td><td>Focal Tversky</td></tr>
+      <tr><td>Output</td><td>4 sigmoids</td><td>4 sigmoids</td><td>4 sigmoids</td></tr>
+      <tr><td>Library</td><td><code>segmentation_models_pytorch</code></td><td><code>transformers</code></td><td><code>segmentation_models_pytorch</code></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="baseline">
+  <h2>Baseline Results</h2>
+  <p>The U-Net (ResNet-34) baseline trained for 20 epochs with Dice + BCE loss is expected, based on community benchmarks on Severstal, to land in the 0.86 to 0.89 mean-Dice range on the test fold.</p>
+  <div class="box box-purple">
+    <strong>Pending main-session run.</strong> Per-class test Dice values will be filled in from <code>deliverables/baseline_metrics.json</code> after the training script executes. Placeholders below.
+  </div>
+  <table>
+    <thead><tr><th>Class</th><th>Test Dice</th><th>Approx literature range</th></tr></thead>
+    <tbody>
+      <tr><td>Class 1 (rare)</td><td>&lt;TBD&gt;</td><td>0.55 - 0.70</td></tr>
+      <tr><td>Class 2 (rarest)</td><td>&lt;TBD&gt;</td><td>0.35 - 0.55</td></tr>
+      <tr><td>Class 3 (most common)</td><td>&lt;TBD&gt;</td><td>0.92 - 0.95</td></tr>
+      <tr><td>Class 4</td><td>&lt;TBD&gt;</td><td>0.80 - 0.88</td></tr>
+      <tr><td><strong>Mean Dice</strong></td><td><strong>&lt;TBD&gt;</strong></td><td><strong>0.86 - 0.89</strong></td></tr>
+    </tbody>
+  </table>
+  <h3>Expected failure modes</h3>
+  <ul>
+    <li>Under-prediction on class 2 due to imbalance.</li>
+    <li>Ragged boundaries on small isolated defects.</li>
+    <li>False positives along the lateral sheet edges (camera vignetting mistaken for faint scaling).</li>
+  </ul>
+</section>
+
+<section id="advanced">
+  <h2>Advanced Results</h2>
+  <p>The SegFormer (mit-b3) advanced model trained for 30 epochs with focal Tversky loss under mixed precision is expected to lift the mean Dice by 1 to 3 points, with most of the gain concentrated on the rare classes (1 and 2).</p>
+  <div class="box box-purple">
+    <strong>Pending main-session run.</strong> Per-class test Dice values will be filled in from <code>deliverables/advanced_metrics.json</code>. Placeholders below.
+  </div>
+  <table>
+    <thead><tr><th>Class</th><th>Test Dice</th><th>Lift over baseline</th></tr></thead>
+    <tbody>
+      <tr><td>Class 1</td><td>&lt;TBD&gt;</td><td>+5 to +12 pts (expected)</td></tr>
+      <tr><td>Class 2</td><td>&lt;TBD&gt;</td><td>+5 to +15 pts (expected)</td></tr>
+      <tr><td>Class 3</td><td>&lt;TBD&gt;</td><td>+0 to +1 pt (saturated)</td></tr>
+      <tr><td>Class 4</td><td>&lt;TBD&gt;</td><td>+1 to +3 pts</td></tr>
+      <tr><td><strong>Mean Dice</strong></td><td><strong>&lt;TBD&gt;</strong></td><td><strong>+1 to +3 pts</strong></td></tr>
+    </tbody>
+  </table>
+  <h3>Why focal Tversky</h3>
+  <ul>
+    <li>alpha &gt; beta: false negatives weighted more than false positives. Right choice for QC where missing a defect is costlier than flagging a false alarm.</li>
+    <li>gamma &lt; 1: down-weights easy examples, concentrates gradient on rare classes.</li>
+    <li>Cosine warm restarts (T0=5, T_mult=2) give a small but reproducible benefit over flat cosine schedules.</li>
+  </ul>
+</section>
+
+<section id="discussion">
+  <h2>Discussion</h2>
+  <h3>What the benchmark says</h3>
+  <p>Single SegFormer mit-b3 with focal Tversky loss is expected to outperform a single U-Net (ResNet-34) with Dice + BCE loss on Severstal by the margins reported in the literature. The lift is concentrated on the rare classes; class 3 saturates near the dataset noise floor.</p>
+  <h3>What the benchmark does NOT say</h3>
+  <ol>
+    <li><strong>Latency.</strong> SegFormer mit-b3 has ~10x the parameters of the baseline. May not fit a 50-100 ms mill QC trigger budget. mit-b0 or EfficientNet-B0 + DeepLabV3+ are the natural production substitutes.</li>
+    <li><strong>Calibration.</strong> Focal Tversky optimises a thresholded metric, not probability calibration. A deployment that uses scores for triage needs Platt scaling or isotonic regression on a held-out fold.</li>
+    <li><strong>Cross-mill transfer.</strong> A model trained on Severstal images is not guaranteed to perform on a different mill's image stream. Typical fine-tuning sample needed: ~200 to 500 labelled target-domain images.</li>
+    <li><strong>Cost asymmetry.</strong> Focal Tversky is biased toward false positives by construction. Whether that bias matches the customer's cost matrix is empirical.</li>
+  </ol>
+  <h3>Phase 2 follow-ups</h3>
+  <ul>
+    <li>Five-fold cross-validation with iterative multi-label stratification.</li>
+    <li>Test-time augmentation (horizontal/vertical flip mean-of-probabilities).</li>
+    <li>Per-class threshold tuning on validation fold.</li>
+    <li>Defect-Mask2Former as a third architecture to bracket the SegFormer result.</li>
+    <li>Knowledge distillation from mit-b3 teacher to mit-b0 student for production latency.</li>
+    <li>Probability calibration (Platt or isotonic).</li>
+    <li>Instance-level evaluation: connected-component pairing with ground truth, per-instance precision/recall.</li>
+  </ul>
+</section>
+
+<section id="conclusion">
+  <h2>Conclusion</h2>
+  <div class="box box-green">
+    <strong>Phase 1 deliverable.</strong> Code-only scaffold for a credible-scale Severstal benchmark: U-Net baseline, SegFormer advanced model, DeepLabV3+ fallback, EDA notebook, 33 verified references, IMRaD manuscript with explicit placeholders, and this presentation.
+  </div>
+  <p>Severstal is a rare case where the customer already has a published-leaderboard reference point (0.91 mean Dice ensemble). Any vendor selling segmentation-based QC into this domain is implicitly compared against that number. The engineering case has to cover not just model accuracy but integration (PLC handoff, sliding-window inference), feedback loop (operator overrides, canary deployments), and cross-domain robustness (different mill, different camera, different lubricant).</p>
+  <p>This Phase 1 scaffold is the starting point. Phase 2 will fill in the cross-validated, calibrated, latency-budgeted variant.</p>
+</section>
+
+<section id="refs">
+  <h2>References (top 5)</h2>
+  <ol>
+    <li><strong>Ronneberger, O., Fischer, P., Brox, T.</strong> (2015). U-Net: Convolutional Networks for Biomedical Image Segmentation. <em>Lecture Notes in Computer Science (MICCAI)</em>. <a href="https://doi.org/10.1007/978-3-319-24574-4_28">10.1007/978-3-319-24574-4_28</a></li>
+    <li><strong>Xie, E., Wang, W., Yu, Z., Anandkumar, A., Alvarez, J. M., Luo, P.</strong> (2021). SegFormer: Simple and Efficient Design for Semantic Segmentation with Transformers. <a href="https://arxiv.org/abs/2105.15203">arXiv:2105.15203</a></li>
+    <li><strong>Chen, L.-C., Zhu, Y., Papandreou, G., Schroff, F., Adam, H.</strong> (2018). Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation (DeepLabV3+). <em>Lecture Notes in Computer Science (ECCV)</em>. <a href="https://doi.org/10.1007/978-3-030-01234-2_49">10.1007/978-3-030-01234-2_49</a></li>
+    <li><strong>Lin, T.-Y., Goyal, P., Girshick, R., He, K., Dollar, P.</strong> (2017). Focal Loss for Dense Object Detection. <em>IEEE International Conference on Computer Vision (ICCV)</em>. <a href="https://doi.org/10.1109/ICCV.2017.324">10.1109/ICCV.2017.324</a></li>
+    <li><strong>He, Y., Song, K., Meng, Q., Yan, Y.</strong> (2020). An End-to-End Steel Surface Defect Detection Approach via Fusing Multiple Hierarchical Features. <em>IEEE Transactions on Instrumentation and Measurement</em>. <a href="https://doi.org/10.1109/TIM.2019.2915404">10.1109/TIM.2019.2915404</a></li>
+  </ol>
+  <p>Full reference list (33 verified entries) at <code>reports/references.md</code>.</p>
+</section>
+
+<footer>
+  Liora MLE Programme - Cohort 6973 - Project 10 of 22 - Phase 1 scaffold (May 2026)
+</footer>
+
+</main>
+</body>
+</html>
