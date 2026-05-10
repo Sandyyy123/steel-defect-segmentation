@@ -18,7 +18,7 @@ Total payload is approximately 2 GB and the dataset is behind Kaggle competition
 #    (cannot be done from CLI)
 
 # 2. Download (run from this folder)
-cd /root/AI/project_root/data
+cd data/
 kaggle competitions download -c severstal-steel-defect-detection
 
 # 3. Extract
