@@ -6,7 +6,7 @@ Run AFTER `kaggle competitions download -c severstal-steel-defect-detection` is 
 into `../data/`. This file is a runnable implementation but is NOT executed during v1.0.
 
 Usage (main session):
-    cd /root/AI/project_root
+    cd .
     python src/model_baseline.py --epochs 20 --batch-size 16
 
 Outputs (saved to ../deliverables/):
