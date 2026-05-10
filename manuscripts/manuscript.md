@@ -1,7 +1,7 @@
 # Multi-Class Semantic Segmentation of Surface Defects on Hot-Rolled Steel Sheets: A U-Net and SegFormer Benchmark on the Severstal Public Dataset
 
 **Authors:** Sandeep Grover, Independent Research
-**Affiliation:** Independent researcher, Mössingen, Germany
+**Affiliation:** Independent researcher, Germany
 **Dataset:** Severstal Steel Defect Detection (Kaggle, 2019)
 **Project:** ML Engineering Portfolio
 **Date:** May 2026
