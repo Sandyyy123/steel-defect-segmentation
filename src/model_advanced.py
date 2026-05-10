@@ -7,10 +7,10 @@ cosine schedule with warm restarts.
 Fallback architecture (if `transformers` is unavailable): DeepLabV3+ with an
 EfficientNet-B4 encoder via `segmentation_models_pytorch`.
 
-This file is a runnable scaffold but is NOT executed during Phase 1.
+This file is a runnable implementation but is NOT executed during v1.0.
 
 Usage (main session):
-    cd /root/AI/liora_projects/10_severstal_steel
+    cd /root/AI/project_root
     python src/model_advanced.py --epochs 30 --batch-size 8
 
 Outputs (saved to ../deliverables/):

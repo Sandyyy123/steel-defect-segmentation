@@ -95,8 +95,8 @@
     <div class="item"><span class="lbl">Resolution</span><span class="val">256 x 1600 grayscale</span></div>
     <div class="item"><span class="lbl">Defect classes</span><span class="val">4 (multi-label)</span></div>
     <div class="item"><span class="lbl">Headline metric</span><span class="val">Per-class Dice</span></div>
-    <div class="item"><span class="lbl">Phase 1 status</span><span class="val">Code scaffolded, not executed</span></div>
-    <div class="item"><span class="lbl">Project track</span><span class="val">Liora MLE / Computer Vision</span></div>
+    <div class="item"><span class="lbl">v1.0 status</span><span class="val">Code implementationed, not executed</span></div>
+    <div class="item"><span class="lbl">Project track</span><span class="val">Portfolio MLE / Computer Vision</span></div>
   </div>
 </section>
 
@@ -136,7 +136,7 @@
     <li>Background dominates: ~98-99% of all pixels.</li>
   </ul>
   <div class="box box-amber">
-    <strong>Phase 1 note.</strong> Dataset is behind Kaggle competition acceptance and exceeds 2 GB. Per project rules, download is documented in <code>data/README.md</code> but deferred to main-session execution. The training scripts are runnable but not executed during Phase 1.
+    <strong>v1.0 note.</strong> Dataset is behind Kaggle competition acceptance and exceeds 2 GB. Per project rules, download is documented in <code>data/README.md</code> but deferred to main-session execution. The training scripts are runnable but not executed during v1.0.
   </div>
 </section>
 
@@ -144,7 +144,7 @@
   <h2>Methods</h2>
   <h3>Pipeline</h3>
   <ul>
-    <li><strong>Splits.</strong> Single 70/15/15 random split at the image level, seed 42. Multilabel-stratified five-fold cross-validation flagged as Phase 2 follow-up.</li>
+    <li><strong>Splits.</strong> Single 70/15/15 random split at the image level, seed 42. Multilabel-stratified five-fold cross-validation flagged as v1.0 follow-up.</li>
     <li><strong>Preprocessing.</strong> ImageNet normalisation; horizontal and vertical flip augmentation; brightness/contrast jitter (p=0.3); Gaussian noise on the advanced model only (p=0.2).</li>
     <li><strong>Loss.</strong> Dice + BCE for the baseline; focal Tversky for the advanced model (alpha=0.7 favours false-negative penalty for QC cost asymmetry; gamma=0.75 focal exponent).</li>
     <li><strong>Optimiser.</strong> AdamW with weight decay 1e-5 (baseline), 1e-4 (advanced).</li>
@@ -224,7 +224,7 @@
     <li><strong>Cross-mill transfer.</strong> A model trained on Severstal images is not guaranteed to perform on a different mill's image stream. Typical fine-tuning sample needed: ~200 to 500 labelled target-domain images.</li>
     <li><strong>Cost asymmetry.</strong> Focal Tversky is biased toward false positives by construction. Whether that bias matches the customer's cost matrix is empirical.</li>
   </ol>
-  <h3>Phase 2 follow-ups</h3>
+  <h3>v1.0 follow-ups</h3>
   <ul>
     <li>Five-fold cross-validation with iterative multi-label stratification.</li>
     <li>Test-time augmentation (horizontal/vertical flip mean-of-probabilities).</li>
@@ -239,10 +239,10 @@
 <section id="conclusion">
   <h2>Conclusion</h2>
   <div class="box box-green">
-    <strong>Phase 1 deliverable.</strong> Code-only scaffold for a credible-scale Severstal benchmark: U-Net baseline, SegFormer advanced model, DeepLabV3+ fallback, EDA notebook, 33 verified references, IMRaD manuscript with explicit placeholders, and this presentation.
+    <strong>v1.0 deliverable.</strong> Code-only implementation for a credible-scale Severstal benchmark: U-Net baseline, SegFormer advanced model, DeepLabV3+ fallback, EDA notebook, 33 verified references, IMRaD manuscript with explicit placeholders, and this presentation.
   </div>
   <p>Severstal is a rare case where the customer already has a published-leaderboard reference point (0.91 mean Dice ensemble). Any vendor selling segmentation-based QC into this domain is implicitly compared against that number. The engineering case has to cover not just model accuracy but integration (PLC handoff, sliding-window inference), feedback loop (operator overrides, canary deployments), and cross-domain robustness (different mill, different camera, different lubricant).</p>
-  <p>This Phase 1 scaffold is the starting point. Phase 2 will fill in the cross-validated, calibrated, latency-budgeted variant.</p>
+  <p>This Initial implementation is the starting point. v1.0 will fill in the cross-validated, calibrated, latency-budgeted variant.</p>
 </section>
 
 <section id="refs">
@@ -258,7 +258,7 @@
 </section>
 
 <footer>
-  Liora MLE Programme - Cohort 6973 - Project 10 of 22 - Phase 1 scaffold (May 2026)
+  Portfolio MLE Programme -  - Project 10 of 22 - Initial implementation (May 2026)
 </footer>
 
 </main>

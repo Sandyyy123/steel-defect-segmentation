@@ -3,10 +3,10 @@
 Multi-class semantic segmentation, 4 defect channels, sigmoid output, Dice + BCE loss.
 
 Run AFTER `kaggle competitions download -c severstal-steel-defect-detection` is unzipped
-into `../data/`. This file is a runnable scaffold but is NOT executed during Phase 1.
+into `../data/`. This file is a runnable implementation but is NOT executed during v1.0.
 
 Usage (main session):
-    cd /root/AI/liora_projects/10_severstal_steel
+    cd /root/AI/project_root
     python src/model_baseline.py --epochs 20 --batch-size 16
 
 Outputs (saved to ../deliverables/):

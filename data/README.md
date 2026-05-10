@@ -6,9 +6,9 @@ Kaggle competition: [Severstal Steel Defect Detection](https://www.kaggle.com/co
 
 Released by Severstal (Russian steelmaker) in collaboration with the Kaggle research team in 2019. The competition closed but the dataset remains the standard public benchmark for multi-class steel-surface defect segmentation.
 
-## Why no Phase 1 download
+## Why no v1.0 download
 
-Total payload is approximately 2 GB and the dataset is behind Kaggle competition rules (you must accept the competition terms once via the Kaggle web UI before the CLI can pull the files). Per the Liora Phase 1 rules (datasets > 2 GB or behind competition acceptance: document only), the download is deferred to main-session execution.
+Total payload is approximately 2 GB and the dataset is behind Kaggle competition rules (you must accept the competition terms once via the Kaggle web UI before the CLI can pull the files). Per the Project layout
 
 ## Download command
 
@@ -18,7 +18,7 @@ Total payload is approximately 2 GB and the dataset is behind Kaggle competition
 #    (cannot be done from CLI)
 
 # 2. Download (run from this folder)
-cd /root/AI/liora_projects/10_severstal_steel/data
+cd /root/AI/project_root/data
 kaggle competitions download -c severstal-steel-defect-detection
 
 # 3. Extract
