@@ -10,7 +10,7 @@ EfficientNet-B4 encoder via `segmentation_models_pytorch`.
 This file is a runnable implementation but is NOT executed during v1.0.
 
 Usage (main session):
-    cd /root/AI/project_root
+    cd .
     python src/model_advanced.py --epochs 30 --batch-size 8
 
 Outputs (saved to ../deliverables/):
