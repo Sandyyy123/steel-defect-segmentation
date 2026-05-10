@@ -1,4 +1,4 @@
-![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Segmentation](https://img.shields.io/badge/CV-segmentation-red) ![License](https://img.shields.io/badge/license-MIT-lightgrey)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue) ![Segmentation](https://img.shields.io/badge/CV-segmentation-red) ![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)
 
 # Severstal Steel Defect Detection — Semantic Segmentation
 
